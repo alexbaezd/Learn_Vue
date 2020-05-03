@@ -4,20 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>First Vue App</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
     <div id="app">
-      <input type="text" v-model="name" />
-      <p>Hello {{name}}</p>
+      <form @submit.prevent="formSubmit">
+        <input type="text" v-model="input" />
+        <select v-model="select">
+          <option value="Default">Default</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+        </select>
+        <textarea v-model="textArea"></textarea>
+        <button type="submit">Send</button>
+      </form>
     </div>
     <script>
       new Vue({
         el: "#app",
-        data() {
-          return {
-            name: "Alex"
-          };
+        data: {
+          input: "",
+          select: "",
+          textArea: ""
+        },
+        methods: {
+          formSubmit() {
+            console.log(this.input, this.select, this.textArea);
+          }
         }
       });
     </script>
