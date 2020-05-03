@@ -8,29 +8,34 @@
   </head>
   <body>
     <div id="app">
-      <form @submit.prevent="formSubmit">
-        <input type="text" v-model="input" />
-        <select v-model="select">
-          <option value="Default">Default</option>
-          <option value="A">A</option>
-          <option value="B">B</option>
-          <option value="C">C</option>
-        </select>
-        <textarea v-model="textArea"></textarea>
-        <button type="submit">Send</button>
-      </form>
+      <p>{{getRandomMethod()}}</p>
+      <p>{{getRandomMethod()}}</p>
+      <p>{{getRandomMethod()}}</p>
+      <hr />
+      <p>{{cGetRandom}}</p>
+      <p>{{cGetRandom}}</p>
+      <p>{{cGetRandom}}</p>
     </div>
     <script>
-      new Vue({
+      var vm = new Vue({
         el: "#app",
         data: {
-          input: "",
-          select: "",
-          textArea: ""
+          input: ""
         },
         methods: {
-          formSubmit() {
-            console.log(this.input, this.select, this.textArea);
+          getRandomMethod: function () {
+            return Math.random();
+          }
+        },
+        computed: {
+          // a computed getter
+          cGetRandom: function () {
+            return Math.random();
+          }
+        },
+        watch: {
+          input: function () {
+            console.log("Changed");
           }
         }
       });
