@@ -8,35 +8,29 @@
   </head>
   <body>
     <div id="app">
-      <p>{{getRandomMethod()}}</p>
-      <p>{{getRandomMethod()}}</p>
-      <p>{{getRandomMethod()}}</p>
-      <hr />
-      <p>{{cGetRandom}}</p>
-      <p>{{cGetRandom}}</p>
-      <p>{{cGetRandom}}</p>
+      <new-component></new-component>
+      <new-component></new-component>
+      <new-component></new-component>
     </div>
     <script>
+      //Component
+      Vue.component("new-component", {
+        template: "<button @click='clickCounter'>Click {{counter}}</button>",
+        data: function () {
+          return {
+            counter: 0
+          };
+        },
+        methods: {
+          clickCounter: function () {
+            this.counter++;
+          }
+        }
+      });
       var vm = new Vue({
         el: "#app",
         data: {
-          input: ""
-        },
-        methods: {
-          getRandomMethod: function () {
-            return Math.random();
-          }
-        },
-        computed: {
-          // a computed getter
-          cGetRandom: function () {
-            return Math.random();
-          }
-        },
-        watch: {
-          input: function () {
-            console.log("Changed");
-          }
+          input: "Hello"
         }
       });
     </script>
