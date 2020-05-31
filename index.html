@@ -3,136 +3,232 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Methods</title>
+    <title>Challenge 2 Updating a Blog</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
-      body {
-        padding: 0;
-        margin: 3rem;
+      #app {
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-pack: center;
+        justify-content: center;
+        font-family: "Work Sans", sans-serif;
       }
-      #colors {
-        font-size: 30px;
-        transition: 0.2s background-color ease;
+
+      h2 {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        text-align: center;
+      }
+
+      li {
+        list-style: none;
+      }
+      li span {
+        display: inline-block;
+        width: 100px;
+      }
+
+      .contain {
+        width: 400px;
+        padding: 10px 40px;
+      }
+
+      input,
+      select {
+        font-family: "Work Sans", sans-serif;
+      }
+
+      button {
+        color: white;
+        border: none;
+        border-radius: 3px;
+        font-family: "Work Sans", sans-serif;
+        font-weight: 300;
+        font-size: 13px;
+        width: 97.5%;
+        text-align: center;
+        padding: 10px 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        cursor: pointer;
+        -webkit-transition: 0.25s all ease;
+        transition: 0.25s all ease;
+        background: #222;
+        margin-bottom: 15px;
+      }
+      button:hover {
+        -webkit-transform: translateY(1px);
+        transform: translateY(1px);
+      }
+
+      select {
+        width: 100%;
+      }
+
+      .post,
+      .new {
+        background: #eee;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 10px 20px;
+        margin: 5px 0 10px;
+      }
+      .post p,
+      .new p {
+        font-weight: bold;
+        margin: 10px 0 5px;
+      }
+
+      .new {
+        background: #666;
+        border: #222;
+        margin-bottom: 40px;
+      }
+      .new input {
+        margin: 0 0 10px;
+      }
+      .new select {
+        width: 97.5%;
+        margin-bottom: 10px;
+      }
+      .new h3 {
+        text-transform: uppercase;
+        font-weight: 300;
+        letter-spacing: 0.05em;
+        margin: 10px 0;
+        color: white;
+      }
+
+      .label {
+        border: 1px solid black;
+        background: white;
+        color: black;
+        float: right;
+        margin-top: 10px;
+        padding: 5px 10px;
+        border-radius: 3px;
       }
     </style>
   </head>
   <body>
     <div id="app">
-      <div
-        id="colors"
-        :style="{backgroundColor:`hsl(${x},80%,50%)`}"
-        @mousemove="xCoordinate"
-      >
-        <p>
-          <button @click="increment">+</button>
-          {{counter}}
-          <button @click="decrement">-</button>
-        </p>
+      <div class="contain">
+        <h2>Blog Posts</h2>
+        <div class="new">
+          <h3>Add a New Post</h3>
+          <form @submit.prevent="addPost">
+            <input v-model="newTitle" placeholder="title" required />
+            <input v-model="newAuthor" placeholder="author" required />
+            <select v-model="newLabel" required>
+              <option disable value="">Add a New Label</option>
+              <option>Science</option>
+              <option>Math</option>
+              <option>Poetry</option>
+              <option>History</option>
+            </select>
+            <button type="submit">Add New Blog Post</button>
+          </form>
+        </div>
 
-        <p>Pixels across:{{x}}</p>
+        <select v-model="selected">
+          <option disable value="">Filter With a label</option>
+          <option>Science</option>
+          <option>Math</option>
+          <option>Poetry</option>
+          <option>History</option>
+        </select>
+
+        <div v-for="(post,i) in filterPost" class="post">
+          <span class="label">{{post.label}}</span>
+          <p>{{post.title}}</p>
+          <small>{{post.author}}</small>
+        </div>
       </div>
-      <hr />
-      <div class="comment">
-        <span>Julianne Delfina</span>
-        <h3>It's lovely after ir rains</h3>
-        <hr />
-        <li v-for="comment in comments">{{comment}}</li>
-        <input
-          type="text"
-          v-model="newComment"
-          placeholder="Add a comment"
-          @keyup.enter="addComment"
-        />
-      </div>
-      <hr />
-      <h2>Movies / Series</h2>
-      <h3>Search a title: <input v-model="filterText" /></h3>
-      <h3>
-        Sort titles by
-        <button @click="sortLowest">Lowest Rated</button>
-        <button @click="sortHighest">Highest Rated</button>
-      </h3>
-      <table>
-        <thead>
-          <tr>
-            <th v-for="key in columns">{{key}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="entry in filteredFilms">
-            <td v-for="key in columns">{{entry[key]}}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
     <script>
       //Vue Instance
-      var vm = new Vue({
+      new Vue({
         el: "#app",
         data: {
-          counter: 0,
-          x: 0,
-          newComment: "",
-          comments: [
-            "Looks great Julianne!",
-            "I love the sea",
-            "Where are you at?"
-          ],
-          columns: ["title", "rating"],
-          ratingsInfo: [
-            { title: `White Chicks`, rating: 82 },
-            { title: `Grey's Anatomy`, rating: 98 },
-            { title: `Prison Break`, rating: 98 },
-            { title: `How I Met Your Mother`, rating: 94 },
-            { title: `Supernatural`, rating: 95 },
-            { title: `Breaking Bad`, rating: 97 },
-            { title: `The Vampire Diaries`, rating: 91 },
-            { title: `The Walking Dead`, rating: 98 },
-            { title: `Pretty Little Liars`, rating: 96 },
-            { title: `Once Upon a Time`, rating: 98 },
-            { title: `Sherlock`, rating: 95 },
-            { title: `Death Note`, rating: 77 },
-            { title: `Naruto`, rating: 88 },
-            { title: `Arrow`, rating: 96 },
-            { title: `Black Mirror`, rating: 80 },
-            { title: `The Originals`, rating: 74 },
-            { title: `The 100`, rating: 97 },
-            { title: `Masha and the Bear`, rating: 81 },
-            { title: `Hunter X Hunter`, rating: 57 },
-            { title: `Marvel's Luke Cage`, rating: 95 },
-            { title: `Marvel's Iron Fist`, rating: 98 }
-          ],
-          filterText: ""
+          selected: "",
+          newTitle: "",
+          newAuthor: "",
+          newLabel: "",
+          posts: [
+            {
+              author: "@vFitzgerald",
+              title: "Quod Ducimus Omnis",
+              label: "science"
+            },
+            {
+              author: "@mPalmer",
+              title: "Vero Eius Laboriosam Ex Repudiandae",
+              label: "math"
+            },
+            {
+              author: "@mDean",
+              title: "Magnam Odit",
+              label: "science"
+            },
+            {
+              author: "@tCole",
+              title: "Velit Mollitia Voluptates Assumenda",
+              label: "science"
+            },
+            {
+              author: "@jCooper",
+              title: "Eum Commodi Cupiditate",
+              label: "poetry"
+            },
+            {
+              author: "@lLamb",
+              title: "Amet",
+              label: "history"
+            },
+            {
+              author: "@fMartin",
+              title: "Voluptatem Fuga Cum Asperiores Error",
+              label: "science"
+            },
+            {
+              author: "@eHayes",
+              title: "Ipsa Consectetur Rerum Repellat Quia",
+              label: "math"
+            },
+            {
+              author: "@cCollier",
+              title: "Dolor Nihil Delectus",
+              label: "science"
+            },
+            {
+              author: "@cBenson",
+              title: "Labore Ipsum Ad Pariatur",
+              label: "poetry"
+            }
+          ]
         },
         methods: {
-          increment() {
-            this.counter++;
-          },
-          decrement() {
-            this.counter--;
-          },
-          xCoordinate(e) {
-            this.x = e.clientX;
-          },
-          addComment() {
-            this.comments.push(this.newComment);
-            this.newComment = "";
-          },
-          sortLowest() {
-            this.ratingsInfo.sort((titleA, titleB) =>
-              titleA.rating > titleB.rating ? 1 : -1
-            );
-          },
-          sortHighest() {
-            this.ratingsInfo.sort((titleA, titleB) =>
-              titleA.rating < titleB.rating ? 1 : -1
-            );
+          addPost() {
+            this.posts.push({
+              author: this.newAuthor,
+              title: this.newTitle,
+              label: this.newLabel.toLowerCase()
+            });
+
+            this.newAuthor = "";
+            this.newTitle = "";
+            this.newLabel = "";
           }
         },
         computed: {
-          filteredFilms() {
-            let filter = new RegExp(this.filterText, "i");
-            return this.ratingsInfo.filter((el) => el.title.match(filter));
+          filterPost: function() {
+            /*let filter = this.selected;
+            return this.posts.filter(
+              post => post.label === filter.toLowerCase() || filter === ""
+            );*/
+
+            let filter = new RegExp(this.selected, "i");
+            return this.posts.filter(post => post.label.match(filter));
           }
         }
       });
