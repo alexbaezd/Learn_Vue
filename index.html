@@ -71,25 +71,27 @@
     <div id="app">
       <h1>Your Upcoming Destinations</h1>
       <div class="location-contain">
-        <div class="locations" v-for="(place,i) in locations" :key="i">
-          <place :name="place.name" :desc="place.desc" :url="place.img"></place>
+        <div class="locations" v-for="(location,i) in locations" :key="i">
+          <place :location="location">
+            <h2>{{location.name}}</h2>
+          </place>
         </div>
       </div>
     </div>
     <!--Template-->
     <script type="text/x-template" id="place-template">
       <div class="place">
-        <img :src="url" width="235" height="300"
+        <img :src="location.img" width="235" height="300"
         />
-        <h2>{{name}}</h2>
-        <p>{{desc}}</p>
+        <slot></slot>
+        <p>{{location.desc}}</p>
       </div>
     </script>
     <!-- Vue  -->
     <script>
       //place component
       Vue.component("place", {
-        props: ["name", "desc", "url"],
+        props: ["location"],
         template: "#place-template"
       });
       //Vue Instance
