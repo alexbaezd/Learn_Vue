@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Components</title>
+    <title>Challenge 3: Refactoring into a Component</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=NTR" rel="stylesheet" />
     <style>
       body {
         width: 100vw;
@@ -16,10 +17,23 @@
       h1 {
         text-align: center;
       }
-
+      button {
+        border: none;
+        width: 120px;
+        border-radius: 1000px;
+        padding: 8px 13px;
+        margin: 5px 0;
+        outline: none;
+        cursor: pointer;
+      }
+      button.inc {
+        background: rgb(152, 203, 249);
+        color: black;
+      }
       .location-contain {
         display: -webkit-box;
         display: flex;
+        flex-wrap: wrap;
         -webkit-box-pack: center;
         justify-content: center;
       }
@@ -42,10 +56,14 @@
       .place h2 {
         margin: 0;
         text-align: center;
+        text-transform: capitalize;
       }
       .place img {
         margin: 10px;
         align-self: center;
+      }
+      .place p {
+        line-height: 1.4;
       }
     </style>
   </head>
@@ -53,25 +71,27 @@
     <div id="app">
       <h1>Your Upcoming Destinations</h1>
       <div class="location-contain">
-        <div class="locations">
-          <div class="place">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/moscow.svg"
-              width="235"
-              height="300"
-            />
-            <h2>Moscow</h2>
-            <p>
-              Moscow is the capital and most populous city of Russia, with 13.2
-              million residents within the city limits and 17.8 million within
-              the urban area. Moscow has the status of a Russian federal city.
-            </p>
-          </div>
+        <div class="locations" v-for="(place,i) in locations" :key="i">
+          <place :name="place.name" :desc="place.desc" :url="place.img"></place>
         </div>
       </div>
     </div>
+    <!--Template-->
+    <script type="text/x-template" id="place-template">
+      <div class="place">
+        <img :src="url" width="235" height="300"
+        />
+        <h2>{{name}}</h2>
+        <p>{{desc}}</p>
+      </div>
+    </script>
     <!-- Vue  -->
     <script>
+      //place component
+      Vue.component("place", {
+        props: ["name", "desc", "url"],
+        template: "#place-template"
+      });
       //Vue Instance
       new Vue({
         el: "#app",
