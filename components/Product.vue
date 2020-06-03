@@ -1,71 +1,29 @@
 <template>
-  <div id="app">
-    <button @click="toggleShow">
-      <span v-if="isShowing">Hide products</span>
-      <span v-else>Show Products</span>
-    </button>
-    <div class="products" v-if="isShowing">
-      <div class="unit" v-for="(unit, i) in manifest" :key="i">
-        <child :item="unit.item" :url="unit.url"></child>
-      </div>
+  <div class="item">
+    <h2>{{ item }}</h2>
+    <img :src="url" width="235" height="300" />
+    <div class="quantity">
+      <button class="inc" @click="counter > 0 ? (counter -= 1) : 0">-</button>
+      <span class="quant-text">Quantity: {{ counter }}</span>
+      <button class="inc" @click="counter += 1">+</button>
     </div>
-    <br />
+    <button class="submit">Submit</button>
   </div>
+  <!--item-->
 </template>
 
 <script>
-import Child from "@/components/Child.vue";
 export default {
-  name: "App",
-  components: {
-    Child
-  },
   data() {
     return {
-      manifest: [
-        {
-          item: "backpack",
-          url: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/backpack.jpg"
-        },
-        {
-          item: "tshirt",
-          url: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/tshirt.jpg"
-        },
-        {
-          item: "sweatshirt",
-          url:
-            "https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/sweatshirt.jpg"
-        }
-      ],
-      isShowing: true
+      counter: 0
     };
   },
-  methods: {
-    toggleShow() {
-      this.isShowing = !this.isShowing;
-    }
-  }
+  props: ["item", "url"]
 };
 </script>
 
-<style>
-body,
-html {
-  font-family: "PT Serif", serif;
-}
-#app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.products {
-  display: -webkit-box;
-  display: flex;
-  flex-wrap: wrap;
-  -webkit-box-pack: center;
-  justify-content: center;
-}
-
+<style scoped>
 .special,
 h1,
 h2,
@@ -78,22 +36,18 @@ button.submit,
   letter-spacing: 0.08em;
   font-size: 12px;
 }
-
 h2 {
   font-size: 20px;
   margin: 0 0 5px;
   text-align: center;
 }
-
 li {
   list-style: none;
   display: inline-block;
 }
-
 input {
   background: #eee;
 }
-
 button {
   border: none;
   border-radius: 1000px;
@@ -108,6 +62,7 @@ button.inc {
 button.submit {
   background: black;
   color: white;
+  margin-top: 10px;
   margin-left: 20px;
   padding: 12px 14px;
   width: 240px;
@@ -119,7 +74,6 @@ button.submit:hover {
   -webkit-transition: 0.25s all ease-out;
   transition: 0.25s all ease-out;
 }
-
 .quant-text {
   display: inline-block;
   text-align: center;
@@ -127,7 +81,6 @@ button.submit:hover {
   padding: 8px;
   padding: 8px;
 }
-
 .quantity {
   border: 2px solid black;
   width: 235px;
@@ -136,7 +89,6 @@ button.submit:hover {
   background: #fff;
   margin-left: 20px;
 }
-
 .item {
   display: -webkit-box;
   display: flex;
@@ -144,7 +96,7 @@ button.submit:hover {
   -webkit-box-direction: normal;
   flex-direction: column;
   width: 280px;
-  height: 440px;
+  height: 460px;
   justify-content: space-around;
   background: #eee;
   padding: 20px 10px;
@@ -152,5 +104,6 @@ button.submit:hover {
 }
 .item img {
   align-self: center;
+  margin: 10px;
 }
 </style>
