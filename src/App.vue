@@ -1,156 +1,74 @@
 <template>
   <div id="app">
-    <button @click="toggleShow">
-      <span v-if="isShowing">Hide products</span>
-      <span v-else>Show Products</span>
-    </button>
-    <div class="products" v-if="isShowing">
-      <div class="unit" v-for="(unit, i) in manifest" :key="i">
-        <child :item="unit.item" :url="unit.url"></child>
-      </div>
-    </div>
-    <br />
+    <h1>
+      State from the store is <span>{{ state }}</span>
+    </h1>
+    <getter />
+    <mutation />
+    <action />
+    <adjust-state />
   </div>
 </template>
 
 <script>
-import Child from "@/components/Child.vue";
+import Getter from "./components/Getter";
+import Mutation from "./components/Mutation";
+import Action from "./components/Action";
+import AdjustState from "./components/AdjustState";
 export default {
   name: "App",
   components: {
-    Child
+    Getter,
+    Mutation,
+    Action,
+    AdjustState
   },
-  data() {
-    return {
-      manifest: [
-        {
-          item: "backpack",
-          url: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/backpack.jpg"
-        },
-        {
-          item: "tshirt",
-          url: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/tshirt.jpg"
-        },
-        {
-          item: "sweatshirt",
-          url:
-            "https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/sweatshirt.jpg"
-        }
-      ],
-      isShowing: true
-    };
-  },
-  methods: {
-    toggleShow() {
-      this.isShowing = !this.isShowing;
+  computed: {
+    state() {
+      return this.$store.state.counter;
     }
   }
 };
 </script>
 
 <style>
-body,
-html {
-  font-family: "PT Serif", serif;
-}
 #app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.products {
-  display: -webkit-box;
-  display: flex;
-  flex-wrap: wrap;
-  -webkit-box-pack: center;
-  justify-content: center;
-}
-
-.special,
-h1,
-h2,
-h3,
-li,
-button.submit,
-.quant-text {
-  font-family: "Montserrat", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 12px;
-}
-
-h2 {
-  font-size: 20px;
-  margin: 0 0 5px;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
-
-li {
-  list-style: none;
-  display: inline-block;
+div {
+  margin: 20px 0;
+  span {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+  }
 }
-
-input {
-  background: #eee;
-}
-
 button {
+  padding: 5px 10px 8px;
+  border-radius: 3px;
+  background: #eee;
   border: none;
-  border-radius: 1000px;
-  padding: 8px 13px;
-  outline: none;
+  margin: 5px 2px;
+  outline: 0;
   cursor: pointer;
 }
-button.inc {
-  background: white;
-  color: black;
+h1,
+h2 {
+  font-weight: normal;
 }
-button.submit {
-  background: black;
-  color: white;
-  margin-left: 20px;
-  padding: 12px 14px;
-  width: 240px;
-  -webkit-transition: 0.25s all ease-in;
-  transition: 0.25s all ease-in;
+ul {
+  list-style-type: none;
+  padding: 0;
 }
-button.submit:hover {
-  opacity: 0.8;
-  -webkit-transition: 0.25s all ease-out;
-  transition: 0.25s all ease-out;
-}
-
-.quant-text {
+li {
   display: inline-block;
-  text-align: center;
-  width: 140px;
-  padding: 8px;
-  padding: 8px;
+  margin: 0 10px;
 }
-
-.quantity {
-  border: 2px solid black;
-  width: 235px;
-  padding-left: 3px;
-  border-radius: 1000px;
-  background: #fff;
-  margin-left: 20px;
-}
-
-.item {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  flex-direction: column;
-  width: 280px;
-  height: 440px;
-  justify-content: space-around;
-  background: #eee;
-  padding: 20px 10px;
-  margin: 30px;
-}
-.item img {
-  align-self: center;
+a {
+  color: #42b983;
 }
 </style>
