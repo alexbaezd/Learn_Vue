@@ -3,7 +3,6 @@
     <h1>
       Hello Products
     </h1>
-    <navegation></navegation>
     <div class="products">
       <div class="unit" v-for="(unit, i) in manifest" :key="i">
         <product :item="unit.item" :url="unit.url"></product>
@@ -14,10 +13,9 @@
 
 <script>
 import Product from "../components/Product";
-import Navegation from "../components/NavBar";
+
 export default {
   components: {
-    Navegation,
     Product
   },
   data() {

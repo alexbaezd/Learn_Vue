@@ -1,7 +1,7 @@
 <template>
   <div class="animation">
     <h1>Bounce the Ball!</h1>
-    <navigation></navigation>
+
     <button @click="toggleShow" class="button--animations">
       <span v-if="isShowing">▶️ Get it gone!</span>
       <span v-else>▶️ Here we go</span>
@@ -20,12 +20,10 @@
 </template>
 
 <script>
-import Navigation from "../components/NavBar";
 import Ball from "../components/Ball";
 
 export default {
   components: {
-    Navigation,
     Ball
   },
   data() {

@@ -8,18 +8,15 @@
       <h2 class="subtitle">
         My gnarly Nuxt.js project
       </h2>
-      <navegation></navegation>
     </div>
   </div>
 </template>
 
 <script>
 import Logo from "~/components/Logo.vue";
-import Navegation from "../components/NavBar";
 
 export default {
   components: {
-    Navegation,
     Logo
   }
 };

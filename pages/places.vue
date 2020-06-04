@@ -2,7 +2,7 @@
   <div>
     <div v-bind:class="[isShowing ? blurClass : '', bkClass]">
       <h1>Your Upcoming Destinations</h1>
-      <navigation></navigation>
+
       <button @click="toggleShow" class="button--grey button--modal">
         <span v-if="isShowing">Hide Modal</span>
         <span v-else>Show Modal</span>
@@ -26,11 +26,10 @@
 
 <script>
 import Place from "../components/Place";
-import Navigation from "../components/NavBar";
+
 import Modal from "../components/Modal";
 export default {
   components: {
-    Navigation,
     Modal,
     Place
   },
