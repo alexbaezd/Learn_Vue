@@ -8,6 +8,11 @@
       <h2 class="subtitle">
         My gnarly Nuxt.js project
       </h2>
+      <br />
+      <p>Last Comment => <strong> Vuex</strong></p>
+      <nuxt-link class="button--grey" to="/comments">
+        {{ lastComment }}</nuxt-link
+      >
     </div>
   </div>
 </template>
@@ -18,6 +23,11 @@ import Logo from "~/components/Logo.vue";
 export default {
   components: {
     Logo
+  },
+  computed: {
+    lastComment() {
+      return this.$store.getters.lastComment;
+    }
   }
 };
 </script>

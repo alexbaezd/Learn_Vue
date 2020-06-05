@@ -22,6 +22,9 @@
         </p>
       </div>
     </div>
+    <div class="won" v-color="{ color: '#bc687' }">
+      {{ lastComment }}
+    </div>
   </div>
 </template>
 
@@ -62,9 +65,14 @@ export default {
   directives: {
     color: {
       bind: function(el, binding) {
-        console.log(binding.value.color);
+        //console.log(binding.value.color);
         el.style.background = binding.value.color;
       }
+    }
+  },
+  computed: {
+    lastComment() {
+      return this.$store.getters.lastComment;
     }
   }
 };

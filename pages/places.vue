@@ -18,6 +18,8 @@
     </div>
     <transition name="fade">
       <modal v-if="isShowing" class="modal">
+        <p>Last Comment {{ lastComment }}</p>
+        <br />
         <button class="button--grey" @click="toggleShow">Close</button>
       </modal>
     </transition>
@@ -65,6 +67,11 @@ export default {
   methods: {
     toggleShow() {
       this.isShowing = !this.isShowing;
+    }
+  },
+  computed: {
+    lastComment() {
+      return this.$store.getters.lastComment;
     }
   }
 };

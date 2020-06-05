@@ -5,6 +5,7 @@
     <nuxt-link class="button--grey" to="/places">🏖 Places</nuxt-link>
     <nuxt-link class="button--grey" to="/animation">🎬 Animation</nuxt-link>
     <nuxt-link class="button--grey" to="/filters">🤟 Filter</nuxt-link>
+    <nuxt-link class="button--grey" to="/comments">📦 Comments Vuex</nuxt-link>
   </div>
 </template>
 <style scoped>
